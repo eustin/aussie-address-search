@@ -130,3 +130,6 @@ dmypy.json
 
 **/G-NAF
 .vscode/
+
+*.zip
+data/*
