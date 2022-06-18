@@ -28,7 +28,7 @@ In the root of this repo:
 1. Run `cp .env.template .env`
 2. In the `.env` file, fill out the `ELASTIC_PASSWORD` and `KIBANA_PASSWORD` environment variables
 3. (optional) Set `vm.max_map_count` to a higher value (see the Troubleshooting section, below)
-4. (optional) If running Windows, make sure your `KIBANA_PORT` is available
+4. (optional) If running Windows, make sure your `KIBANA_PORT` is available (see Troubleshooting section, below)
 4.  Run `docker-compose up`
 
 Once Kibana starts running, visit `localhost:${KIBANA_PORT}` and login with the username `elastic` and password `${ELASTIC_PASSWORD}` as defined in your `.env` file. 
