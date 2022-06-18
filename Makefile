@@ -1,8 +1,14 @@
 SHELL := /bin/bash
 
+.PHONY: download-gnaf
+download-gnaf:
+	@./scripts/download-gnaf.sh
+
 .PHONY: install
 install:
-	@./scripts/download-gnaf.sh
+	@python3 -m venv venv &&\
+	source venv/bin/activate &&\
+	pip3 install -r requirements.txt
 
 .PHONY: up
 up:
