@@ -38,7 +38,7 @@ address_detail_files = glob((gnaf_standard_dir / "*_ADDRESS_DETAIL_psv.psv").as_
 street_locality_files = glob(
     (gnaf_standard_dir / "*_STREET_LOCALITY_psv.psv").as_posix()
 )
-locality_files = glob((gnaf_standard_dir / "*_LOCALITY_psv.psv").as_posix())
+locality_files = glob((gnaf_standard_dir / "*[!STREET]_LOCALITY_psv.psv").as_posix())
 level_type_file = glob(
     (gnaf_auth_code_dir / "Authority_Code_LEVEL_TYPE_AUT_psv.psv").as_posix()
 )
