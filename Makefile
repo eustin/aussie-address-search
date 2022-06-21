@@ -11,15 +11,16 @@ install:
 	pip3 install -r requirements.txt &&\
 	python3 scripts/build_gnaf.py
 
-
 .PHONY: up
 up:
-	docker-compose up
-
-.PHONY: up-d
-up-d:
-	docker-compose up -d
+	@docker-compose up -d
 
 .PHONY: down
 down:
-	docker-compose down
+	@docker-compose down
+
+.PHONY: cp-cert
+cp-cert:
+	@CONTAINER_NAME=$$(docker ps --format "{{.Names}}" | grep elasticsearch) &&\
+	docker cp $$CONTAINER_NAME:/usr/share/elasticsearch/config/certs/ca/ca.crt .
+

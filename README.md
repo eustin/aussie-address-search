@@ -21,7 +21,19 @@ mail by reference to a secondary source of information other than the Licensed
 Material. 
 ```
 
-## How to run the stack
+## How to run this project
+
+These Makefile targets have been deliberately split up so that you can run specific parts of it at your will.
+
+### 1. Download G-NAF files
+
+`make download-gnaf`
+
+### 2. Setup Python venv and build G-NAF files
+
+`make install`
+
+### 3. Setup and start Elasticsearch and Kibana
 
 In the root of this repo:
 
@@ -32,6 +44,10 @@ In the root of this repo:
 4.  Run `docker-compose up`
 
 Once Kibana starts running, visit `localhost:${KIBANA_PORT}` and login with the username `elastic` and password `${ELASTIC_PASSWORD}` as defined in your `.env` file. 
+
+### 4. Copy certificate from Elasticsearch container
+
+`make cp-cert`
 
 ## Notes on the `docker-compose` file
 
