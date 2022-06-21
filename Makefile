@@ -24,3 +24,7 @@ cp-cert:
 	@CONTAINER_NAME=$$(docker ps --format "{{.Names}}" | grep elasticsearch) &&\
 	docker cp $$CONTAINER_NAME:/usr/share/elasticsearch/config/certs/ca/ca.crt .
 
+.PHONY: load-elastic
+load-elastic:
+	@source venv/bin/activate &&\
+	python3 scripts/load_elasticsearch.py
