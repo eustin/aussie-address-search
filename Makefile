@@ -8,7 +8,9 @@ download-gnaf:
 install:
 	@python3 -m venv venv &&\
 	source venv/bin/activate &&\
-	pip3 install -r requirements.txt
+	pip3 install -r requirements.txt &&\
+	python3 scripts/build_gnaf.py
+
 
 .PHONY: up
 up:
