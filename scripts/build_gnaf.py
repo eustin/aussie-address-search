@@ -7,6 +7,7 @@ import pandas as pd
 STATES_TERRITORIES = ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"]
 
 ADDRESS_DETAIL_TARGET_FIELDS = [
+    "ADDRESS_DETAIL_PID",
     "BUILDING_NAME",
     "LOT_NUMBER_PREFIX",
     "LOT_NUMBER",
