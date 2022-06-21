@@ -49,6 +49,32 @@ Once Kibana starts running, visit `localhost:${KIBANA_PORT}` and login with the 
 
 `make cp-cert`
 
+### 5. Load data into Elasticsearch
+
+`make load-elastic`
+
+## Making requests to the Elasticsearch cluster using Postman
+
+The base URL to make GET requests to when developing locally is this:
+
+`https://localhost:{ELASTIC_SEARCH_PORT}/addresses`
+
+Before making requests to the above endpoint, you will need to:
+* load the CA certificate into Postman at `Settings -> Certificates`
+* pass your credentials in `Authorization -> Basic Auth`
+
+Here is an example request you can make to the above endpoint:
+
+```
+{
+    "query": {
+        "match": {
+            "body": "SUNSHINE PARADE"
+        }
+    }
+}
+```
+
 ## Notes on the `docker-compose` file
 
 Most of the `docker-compose.yml` file comes from [this link](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
@@ -74,7 +100,3 @@ If you're running Windows with WSL2 like I am, run this command to see port excl
 ```netsh int ipv4 show excludedportrange protocol=tcp```
 
 Choose a port that falls outside of these ranges and update the `KIBANA_PORT` environment variable in your `.env` file. 
-
-
-
-
