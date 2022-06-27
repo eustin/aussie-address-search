@@ -37,3 +37,6 @@ load-elastic:
 watch-server:
 	@npm run watch --prefix server
 
+.PHONY: client
+client:
+	@npm start --prefix client
