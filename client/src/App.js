@@ -9,16 +9,19 @@ function App() {
   }
 
   return (
-    <div>
-      <div>Welcome to Aussie Address Search!</div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-yellow-200 via-green-200 to-green-500">
+      <div className="text-4xl mb-5 font-bold text-slate-700">
+        Welcome to Aussie Address Search!
+      </div>
 
-      <label htmlFor="searchBox">
+      <label htmlFor="searchBox" className="text-xl mb-5 text-slate-700">
         Search for your validated address, here:
       </label>
       <input
         id="searchBox"
+        className="border-2 p-2 border-gray-400 rounded w-1/2"
         type="text"
-        placeholder="123 Fake Street"
+        placeholder="e.g. 123 Fake Street"
         onChange={onChangeHandler}
       />
     </div>
