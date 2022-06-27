@@ -1,5 +1,5 @@
-# aussie-address-search
-A (maybe) Python + React project (probably) using Elasticsearch to search the [Geocoded National Address File](https://data.gov.au/dataset/ds-dga-19432f89-dc3a-4ef3-b943-5326ef1dbecc/details).
+# Aussie Address Search
+A React + Express + Python project using Elasticsearch to search the [Geocoded National Address File](https://data.gov.au/dataset/ds-dga-19432f89-dc3a-4ef3-b943-5326ef1dbecc/details).
 
 ## Motivation
 
@@ -20,6 +20,16 @@ verified that each address to be used for the sending of mail is capable of rece
 mail by reference to a secondary source of information other than the Licensed
 Material. 
 ```
+
+## Current state
+
+<img src="https://user-images.githubusercontent.com/6435319/176046437-d954895e-ac43-4297-9230-7307d70b72b6.png" width=500>
+
+* Elasticsearch running in Docker
+* Bash and Python sripts to download and process G-NAF data located in `server/scripts`
+* Node.js server + Express app as backend
+* React frontend 
+* Beautiful Wombat image credit goes to <a href="https://www.vecteezy.com/free-vector/nature">Nature Vectors by Vecteezy</a>
 
 ## How to run this project
 
