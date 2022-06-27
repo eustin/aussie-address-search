@@ -48,7 +48,6 @@ def create_file_map(fpath_list, sate_pattern):
     states_list = [re.search(sate_pattern, x).group() for x in fpath_list]
     return {k: v for k, v in zip(states_list, fpath_list)}
 
-
 def check_dirs_exist(parent_path, child_dir):
     try:
         dir_to_check = parent_path / child_dir
@@ -58,10 +57,8 @@ def check_dirs_exist(parent_path, child_dir):
         logging.error(f"{dir_to_check.as_posix()} doesn't exist")
         raise
 
-
 def df_from_pipe_delimited_file(fpath):
     return pd.read_csv(fpath, delimiter="|")
-
 
 def create_locality_dict(gnaf_standard_dir):
     locality_files = glob((gnaf_standard_dir / "*LOCALITY_psv.psv").as_posix())
@@ -74,11 +71,26 @@ def create_street_locality_detail_dict(gnaf_standard_dir):
     street_locality_dict = create_file_map(street_locality_files, "(?<=\/)[A-Z]+(?=_STREET_LOCALITY_psv.psv)")
     return street_locality_dict
 
-
 def create_address_detail_dict(gnaf_standard_dir):
     address_detail_files = glob((gnaf_standard_dir / "*_ADDRESS_DETAIL_psv.psv").as_posix())
     address_detail_dict = create_file_map(address_detail_files, "(?<=\/)[A-Z]+(?=_ADDRESS_DETAIL_psv.psv)")
     return address_detail_dict
+
+def create_level_type_df(gnaf_auth_code_dir):
+    level_type_file = glob((gnaf_auth_code_dir / "Authority_Code_LEVEL_TYPE_AUT_psv.psv").as_posix()).pop()
+    level_type_df = pd.read_csv(level_type_file, delimiter="|").drop(columns="DESCRIPTION")
+    return level_type_df
+
+def create_address_df(details_df, street_locality_df, locality_df):
+    logging.info(f"merging files")
+    try:
+        address_df = pd.merge(details_df, street_locality_df, on="STREET_LOCALITY_PID", how="inner")
+        address_df = pd.merge(address_df, locality_df, on="LOCALITY_PID", how="inner")
+        assert address_df.shape[0] == details_df.shape[0]
+        return address_df
+    except AssertionError:
+        logging.error("Number of rows in address dataframe rows don't match number of rows in address detail")
+        raise
 
 
 def main():
@@ -94,10 +106,7 @@ def main():
     address_detail_dict = create_address_detail_dict(gnaf_standard_dir)
     street_locality_dict = create_street_locality_detail_dict(gnaf_standard_dir)
     locality_dict = create_locality_dict(gnaf_standard_dir)
-
-    level_type_file = glob((gnaf_auth_code_dir / "Authority_Code_LEVEL_TYPE_AUT_psv.psv").as_posix()).pop()
-    level_type_df = pd.read_csv(level_type_file, delimiter="|")
-    level_type_df.drop(columns="DESCRIPTION", inplace=True)
+    level_type_df = create_level_type_df(gnaf_auth_code_dir)
 
     for state, details_fpath in address_detail_dict.items():
         logging.info(f"processing {state}")
@@ -119,12 +128,7 @@ def main():
             LOCALITY_TARGET_FIELDS
         ]
 
-        logging.info(f"merging files")
-        address_df = pd.merge(
-            details_df, street_locality_df, on="STREET_LOCALITY_PID", how="inner"
-        )
-        address_df = pd.merge(address_df, locality_df, on="LOCALITY_PID", how="inner")
-        assert address_df.shape[0] == details_df.shape[0]
+        address_df = create_address_df(details_df, street_locality_df, locality_df)
 
         out_path = f"data/address_file_{state}.csv"
         logging.info(f"saving CSV file to {out_path}")
