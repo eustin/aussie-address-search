@@ -25,6 +25,7 @@ function App() {
         placeholder="e.g. 123 Fake Street"
         onChange={onChangeHandler}
       />
+      <a className="mt-5 text-xs" href="https://www.vecteezy.com/free-vector/nature">Wombat logo from Nature Vectors by Vecteezy. Thank you!</a>
     </div>
   );
 }
