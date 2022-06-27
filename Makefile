@@ -14,7 +14,9 @@ install:
 
 .PHONY: up
 up:
-	@cd server && docker-compose up -d
+	@npm start --prefix client &\
+	npm run watch --prefix server &\
+	cd server && docker-compose up -d
 
 .PHONY: down
 down:
@@ -30,3 +32,8 @@ load-elastic:
 	@cd server &&\
 	source venv/bin/activate &&\
 	python3 scripts/load_elasticsearch.py
+
+.PHONY: watch-server
+watch-server:
+	@npm run watch --prefix server
+
