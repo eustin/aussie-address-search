@@ -1,12 +1,26 @@
+import { useState } from "react";
+
 function App() {
+  const [searchText, setSearchText] = useState("");
+
+  const onChangeHandler = (event) => {
+    const text = event.target.value;
+    setSearchText(text);
+  }
+
   return (
     <div>
       <div>Welcome to Aussie Address Search!</div>
+
       <label htmlFor="searchBox">
-        Search for your address in the G-NAF database here:
+        Search for your validated address, here:
       </label>
-      <input id="searchBox" placeholder="e.g. 123 Fake Street" />
-      <input type="submit" value="Search"/>
+      <input
+        id="searchBox"
+        type="text"
+        placeholder="123 Fake Street"
+        onChange={onChangeHandler}
+      />
     </div>
   );
 }
