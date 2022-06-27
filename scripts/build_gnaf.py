@@ -63,6 +63,24 @@ def df_from_pipe_delimited_file(fpath):
     return pd.read_csv(fpath, delimiter="|")
 
 
+def create_locality_dict(gnaf_standard_dir):
+    locality_files = glob((gnaf_standard_dir / "*LOCALITY_psv.psv").as_posix())
+    locality_files = [x for x in locality_files if "STREET" not in x]
+    locality_dict = create_file_map(locality_files, "(?<=\/)[A-Z]+(?=_LOCALITY_psv.psv)")
+    return locality_dict
+
+def create_street_locality_detail_dict(gnaf_standard_dir):
+    street_locality_files = glob((gnaf_standard_dir / "*_STREET_LOCALITY_psv.psv").as_posix())
+    street_locality_dict = create_file_map(street_locality_files, "(?<=\/)[A-Z]+(?=_STREET_LOCALITY_psv.psv)")
+    return street_locality_dict
+
+
+def create_address_detail_dict(gnaf_standard_dir):
+    address_detail_files = glob((gnaf_standard_dir / "*_ADDRESS_DETAIL_psv.psv").as_posix())
+    address_detail_dict = create_file_map(address_detail_files, "(?<=\/)[A-Z]+(?=_ADDRESS_DETAIL_psv.psv)")
+    return address_detail_dict
+
+
 def main():
     try:
         gnaf_dir = Path(glob("data/G-NAF/G-NAF*").pop())
@@ -73,30 +91,11 @@ def main():
     gnaf_standard_dir = check_dirs_exist(gnaf_dir, "Standard")
     gnaf_auth_code_dir = check_dirs_exist(gnaf_dir, "Authority Code")
 
-    # build file dicts
-    address_detail_files = glob(
-        (gnaf_standard_dir / "*_ADDRESS_DETAIL_psv.psv").as_posix()
-    )
-    address_detail_dict = create_file_map(
-        address_detail_files, "(?<=\/)[A-Z]+(?=_ADDRESS_DETAIL_psv.psv)"
-    )
+    address_detail_dict = create_address_detail_dict(gnaf_standard_dir)
+    street_locality_dict = create_street_locality_detail_dict(gnaf_standard_dir)
+    locality_dict = create_locality_dict(gnaf_standard_dir)
 
-    street_locality_files = glob(
-        (gnaf_standard_dir / "*_STREET_LOCALITY_psv.psv").as_posix()
-    )
-    street_locality_dict = create_file_map(
-        street_locality_files, "(?<=\/)[A-Z]+(?=_STREET_LOCALITY_psv.psv)"
-    )
-
-    locality_files = glob((gnaf_standard_dir / "*LOCALITY_psv.psv").as_posix())
-    locality_files = [x for x in locality_files if "STREET" not in x]
-    locality_dict = create_file_map(
-        locality_files, "(?<=\/)[A-Z]+(?=_LOCALITY_psv.psv)"
-    )
-
-    level_type_file = glob(
-        (gnaf_auth_code_dir / "Authority_Code_LEVEL_TYPE_AUT_psv.psv").as_posix()
-    ).pop()
+    level_type_file = glob((gnaf_auth_code_dir / "Authority_Code_LEVEL_TYPE_AUT_psv.psv").as_posix()).pop()
     level_type_df = pd.read_csv(level_type_file, delimiter="|")
     level_type_df.drop(columns="DESCRIPTION", inplace=True)
 
@@ -130,6 +129,7 @@ def main():
         out_path = f"data/address_file_{state}.csv"
         logging.info(f"saving CSV file to {out_path}")
         address_df.to_csv(out_path, index=False)
+
 
 if __name__ == "__main__":
     main()
