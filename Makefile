@@ -40,3 +40,9 @@ watch-server:
 .PHONY: client
 client:
 	@npm start --prefix client
+
+.PHONY: pytest
+pytest:
+	@cd server &&\
+	source venv/bin/activate &&\
+	python3 -m pytest
