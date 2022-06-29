@@ -7,21 +7,22 @@ const INITIAL_SUGGESTIONS = [
   { id: "3", suggestion: "Broadway" },
 ];
 
-const INITIAL_SEARCH_TEXT = "123 Fake";
-
 function App() {
-  const [searchText, setSearchText] = useState(INITIAL_SEARCH_TEXT);
+  const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState(INITIAL_SUGGESTIONS);
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [suggestionsVisible, setSuggestionsVisible] = useState(false);
 
-  const selectedAddress = "123 Fake Street";
+  const onChangeHandler = (event) => {
+    const text = event.target.value;
+    setSearchText(text);
+    setSuggestionsVisible(true);
+  };
 
-  // const onChangeHandler = (event) => {
-  //   const text = event.target.value;
-  //   setSearchText(text);
-  // };
-
-  const suggestionsStyles =
-    "absolute z-10 top-full left-0 right-0 rounded border-2 border-gray-400";
+  const onClickHandler = (event) => {
+    setSelectedAddress(event.target.innerText);
+    setSuggestionsVisible(false);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-yellow-200 via-green-200 to-green-500 overflow-hidden">
@@ -39,19 +40,19 @@ function App() {
           type="text"
           placeholder="e.g. 123 Fake Street"
           value={searchText}
-          // onChange={onChangeHandler}
+          onChange={onChangeHandler}
         />
         <div
-          className={
-            suggestions.length === 0
-              ? suggestionsStyles.concat(" hidden")
-              : suggestionsStyles
-          }
+          className={`absolute z-10 top-full left-0 right-0 rounded border-2 border-gray-400 ${
+            suggestions.length === 0 || !suggestionsVisible ? "hidden" : ""
+          }`}
         >
           {Boolean(suggestions) &&
             suggestions.map(({ id, suggestion }) => (
               <div className="p-1 bg-white hover:bg-gray-200" key={id}>
-                {suggestion}
+                <button className="w-full text-left" onClick={onClickHandler}>
+                  {suggestion}
+                </button>
               </div>
             ))}
         </div>
