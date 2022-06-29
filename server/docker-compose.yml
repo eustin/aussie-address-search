@@ -61,7 +61,7 @@ services:
       - certs:/usr/share/elasticsearch/config/certs
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
-      - ${ES_URL}${ES_PORT}:${ES_PORT}
+      - ${ES_URL}:${ES_PORT}:${ES_PORT}
     environment:
       - node.name=elasticsearch
       - cluster.name=${CLUSTER_NAME}
