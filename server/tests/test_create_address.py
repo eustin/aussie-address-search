@@ -1,4 +1,5 @@
 from copy import deepcopy
+import pytest
 from scripts.load_elasticsearch import (create_address,
                                         add_building_name,
                                         add_postcode,
@@ -7,8 +8,8 @@ from scripts.load_elasticsearch import (create_address,
                                         add_number_details,
                                         add_level_details,
                                         add_flat_details,
+                                        convert_string_float_to_string_int
                                         )
-
 
 ROW_FIELDS = [
     "BUILDING_NAME",
@@ -36,6 +37,14 @@ ROW_RECORD = {key: "" for key in ROW_FIELDS}
 
 def make_row_and_address_components():
     return deepcopy(ROW_RECORD), []
+
+
+def test_convert_float_string_to_int():
+    with pytest.raises(ValueError):
+        convert_string_float_to_string_int("hello")
+
+    assert convert_string_float_to_string_int("12.0") == "12"
+    assert convert_string_float_to_string_int("") == ""
 
 
 def test_empty_create_address():
