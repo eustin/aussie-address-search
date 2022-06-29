@@ -44,7 +44,11 @@ function App() {
         />
         <div
           className={`absolute z-10 top-full left-0 right-0 rounded border-2 border-gray-400 ${
-            suggestions.length === 0 || !suggestionsVisible ? "hidden" : ""
+            suggestions.length === 0 ||
+            !suggestionsVisible ||
+            searchText.length === 0
+              ? "hidden"
+              : ""
           }`}
         >
           {Boolean(suggestions) &&
