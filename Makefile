@@ -53,8 +53,7 @@ client:
 
 .PHONY: deploy
 deploy:
-
-	
+	@npm run build --prefix client
 
 .PHONY: pytest
 pytest:
