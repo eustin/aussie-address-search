@@ -65,13 +65,17 @@ In the root of this repo:
 
 ### 4. Set up and load data into Elasticsearch index
 
-Run `setup-elastic`
+Run `make setup-elastic`
 
 Once Kibana starts running and you want to check it out, visit `localhost:${KIBANA_PORT}` and login with the username `elastic` and password `${ELASTIC_PASSWORD}` as defined in your `.env` file. 
 
-### 5. Start the stack!
+### 5. Install server and React app
 
-`make up`
+Run `make install`
+
+### 6. Start the stack!
+
+Run `make up`
 
 ## Making requests to the Elasticsearch using Postman
 

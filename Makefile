@@ -22,10 +22,15 @@ setup-elastic:
 	source venv/bin/activate &&\
 	python3 scripts/load_elasticsearch.py
 
+.PHONY: install
+install:
+	@npm install --prefix client &&\
+	npm install --prefix server
+
 .PHONY: up
 up:
 	@npm start --prefix client &\
-	npm run --prefix server &\
+	npm run watch --prefix server &\
 	cd server && docker-compose up -d
 
 .PHONY: down
