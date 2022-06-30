@@ -140,7 +140,6 @@ def address_generator(file_path):
 
 
 def create_elastic_client():
-
     return Elasticsearch(
         f'https://localhost:{os.environ["ES_PORT"]}',
         ca_certs="ca.crt",
@@ -156,7 +155,6 @@ def main():
     for file in address_files:
         logger.info(f"loading file into elasticsearch: {file}")
         deque(parallel_bulk(es_client, address_generator(file)), maxlen=0)
-        break
 
 
 if __name__ == "__main__":
