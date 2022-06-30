@@ -14,8 +14,10 @@ const Search = ({ setSelectedAddress, searchText, setSearchText }) => {
   };
 
   const onClickHandler = (event) => {
-    setSelectedAddress(event.target.innerText);
+    const selectedAddress = event.target.innerText;
+    setSelectedAddress(selectedAddress);
     setSuggestionsVisible(false);
+    setSearchText(selectedAddress);
   };
 
   const onFocusHandler = () => {
