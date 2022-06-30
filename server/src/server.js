@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config("../.env");
 const http = require("http");
 const app = require("./app");
 
