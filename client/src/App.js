@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-tr from-yellow-200 via-green-200 to-green-500 overflow-hidden">
-      <Logo height="280" />
+      <Logo width="280" />
       <div className="text-4xl mb-5 mt-10 font-bold text-slate-700">
         Welcome to Aussie Address Search!
       </div>
