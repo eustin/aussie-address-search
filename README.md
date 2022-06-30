@@ -23,13 +23,25 @@ Material.
 
 ## Current state
 
-<img src="https://user-images.githubusercontent.com/6435319/176046437-d954895e-ac43-4297-9230-7307d70b72b6.png" width=500>
+<img src="https://user-images.githubusercontent.com/6435319/176627680-80ce7e4a-3b71-433b-bc86-a44209ae38b5.gif" width=1000>
+
+### Done
 
 * Elasticsearch running in Docker
 * Bash and Python sripts to download and process G-NAF data located in `server/scripts`
 * Node.js server + Express app as backend
 * React frontend 
 * Beautiful Wombat image credit goes to <a href="https://www.vecteezy.com/free-vector/nature">Nature Vectors by Vecteezy</a>
+
+### To do
+
+* Throttle API requests to search endpoint
+* Styling
+* Backend API tests
+* Create Elasticsearch cluster
+* Tune Elasticsearch suggestions performance 
+* Dockerise and deploy!
+
 
 ## How to run this project
 
