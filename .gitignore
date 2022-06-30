@@ -133,6 +133,7 @@ dmypy.json
 # Server
 *.crt
 node_modules
+server/public
 
 # Data 
 server/data/Contents.txt
