@@ -46,6 +46,7 @@ const Search = ({ setSelectedAddress, searchText, setSearchText }) => {
           className="p-2 border-2 border-gray-400 rounded w-full"
           type="text"
           placeholder="e.g. 123 Fake Street"
+          autoComplete="off"
           value={searchText}
           onChange={onChangeHandler}
           onFocus={onFocusHandler}
