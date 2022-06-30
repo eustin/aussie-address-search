@@ -3,6 +3,7 @@ const Logo = ({ height, width }) => {
     <svg
       version="1.1"
       id="svg2"
+      preserveAspectRatio="xMidYMin slice"
       width={width}
       height={height}
       viewBox="0 0 1789.4399 1512.96"
