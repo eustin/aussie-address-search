@@ -29,20 +29,21 @@ def convert_string_float_to_string_int(float_string):
 
 def create_address(row):
     address_components = []
-    add_building_name(row, address_components)
-    add_flat_details(row, address_components)
-    add_level_details(row, address_components)
-    add_number_details(row, address_components)
-    add_street_details(row, address_components)
-    add_locality(row, address_components)
-    add_postcode(row, address_components)
-    return "".join(address_components)
+    address_components = add_building_name(row, list(address_components))
+    address_components = add_flat_details(row, list(address_components))
+    address_components = add_level_details(row, list(address_components))
+    address_components = add_number_details(row, list(address_components))
+    address_components = add_street_details(row, list(address_components))
+    address_components = add_locality(row, list(address_components))
+    address_components = add_postcode(row, list(address_components))
+    return "".join(list(address_components))
 
 
 def add_building_name(row, address_components):
     address_components.append(row["BUILDING_NAME"])
     if len(row["BUILDING_NAME"]) > 0:
         address_components.append(", ")
+    return address_components
 
 
 def add_flat_details(row, address_components):
@@ -57,10 +58,12 @@ def add_flat_details(row, address_components):
         address_components.append(flat_number)
     except ValueError:
         pass
-
+    
     address_components.append(row["FLAT_NUMBER_SUFFIX"])
     if len(row["FLAT_TYPE_CODE"]) > 0:
         address_components.append(" ")
+
+    return address_components
 
 
 def add_level_details(row, address_components):
@@ -77,6 +80,9 @@ def add_level_details(row, address_components):
 
     if row["LEVEL_NUMBER"] != "":
         address_components.append(" ")
+    
+    return address_components
+
 
 
 def add_number_details(row, address_components):
@@ -102,20 +108,26 @@ def add_number_details(row, address_components):
     if row["NUMBER_FIRST"]:
         address_components.append(" ")
 
+    return address_components
+
 
 def add_street_details(row, address_components):
     if not row["STREET_NAME"] and not row["STREET_TYPE_CODE"]:
-        return
+        return address_components
     address_components.append(row["STREET_NAME"])
     if row["STREET_TYPE_CODE"]:
         address_components.extend([" ", row["STREET_TYPE_CODE"]])
     address_components.append(", ")
+
+    return address_components
 
 
 def add_locality(row, address_components):
     address_components.append(row["LOCALITY_NAME"])
     if row["LOCALITY_NAME"]:
         address_components.append(", ")
+
+    return address_components
 
 
 def add_postcode(row, address_components):
@@ -124,6 +136,8 @@ def add_postcode(row, address_components):
         address_components.append(postcode)
     except ValueError:
         logging.error(f'Cannot coerce {row["POSTCODE"]} to number')
+
+    return address_components
 
 
 def address_generator(file_path):
