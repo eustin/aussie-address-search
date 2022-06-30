@@ -76,9 +76,11 @@ Once Kibana starts running and you want to check it out, visit `localhost:${KIBA
 
 Run `make install`
 
-### 6. Start the stack!
+### 6. Run the stack
 
-Run `make up`
+Run `make deploy`
+
+This will start the Node server on `http://localhost:8000`.
 
 ## Making requests to the Elasticsearch using Postman
 
