@@ -3,13 +3,10 @@ SHELL := /bin/bash
 server/.env:
 	@cp server/.env.template server/.env
 
-.PHONY: download-gnaf
-download-gnaf:
-	@server/scripts/download-gnaf.sh
-
 .PHONY: setup-gnaf
 setup-gnaf:
-	@server/scripts/download-gnaf.sh &&\
+	@chmod +x server/scripts/download-gnaf.sh &&\
+	server/scripts/download-gnaf.sh &&\
 	cd server &&\
 	python3 -m venv venv &&\
 	source venv/bin/activate &&\
