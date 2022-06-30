@@ -47,39 +47,37 @@ Material.
 
 These Makefile targets have been deliberately split up so that you can run specific parts of it at your will.
 
-### 1. Download G-NAF files
-
-`make download-gnaf`
-
-### 2. Setup Python venv and build G-NAF files
-
-`make install`
-
-### 3. Setup and start Elasticsearch and Kibana
+### 1. Set up env vars
 
 In the root of this repo:
 
-1. Run `cp .env.template .env`
-2. In the `.env` file, fill out the `ELASTIC_PASSWORD` and `KIBANA_PASSWORD` environment variables
-3. (optional) Set `vm.max_map_count` to a higher value (see the Troubleshooting section, below)
-4. (optional) If running Windows, make sure your `KIBANA_PORT` is available (see Troubleshooting section, below)
-4.  Run `make up`
+1. `make server/.env`
+2. Fill out `ELASTIC_PASSWORD` and `KIBANA_PASSWORD`
 
-Once Kibana starts running, visit `localhost:${KIBANA_PORT}` and login with the username `elastic` and password `${ELASTIC_PASSWORD}` as defined in your `.env` file. 
+### 2. Download and build G-NAF files
 
-### 4. Copy certificate from Elasticsearch container
+`make setup-gnaf`
 
-`make cp-cert`
+### 3. Optional steps to take before setting up Elasticsearch and Kibana
 
-### 5. Load data into Elasticsearch
+    1. Set `vm.max_map_count` to a higher value (see the Troubleshooting section, below)
+    2. If running Windows, make sure your `KIBANA_PORT` is available (see Troubleshooting section, below)
 
-`make load-elastic`
+### 4. Set up and load data into Elasticsearch index
 
-## Making requests to the Elasticsearch cluster using Postman
+Run `setup-elastic`
 
-The base URL to make GET requests to when developing locally is this:
+Once Kibana starts running and you want to check it out, visit `localhost:${KIBANA_PORT}` and login with the username `elastic` and password `${ELASTIC_PASSWORD}` as defined in your `.env` file. 
 
-`https://localhost:{ELASTIC_SEARCH_PORT}/addresses`
+### 5. Start the stack!
+
+`make up`
+
+## Making requests to the Elasticsearch using Postman
+
+The base URL to make POST requests to when developing locally is this:
+
+`https://localhost:{ELASTIC_SEARCH_PORT}/addresses/_search`
 
 Before making requests to the above endpoint, you will need to:
 * load the CA certificate into Postman at `Settings -> Certificates`
