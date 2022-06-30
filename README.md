@@ -38,6 +38,9 @@ Material.
 * Throttle API requests to search endpoint
 * Styling
 * Backend API tests
+* Backend API logging
+* Node HTTPS webserver
+* Serve React app build from Node server 
 * Create Elasticsearch cluster
 * Tune Elasticsearch suggestions performance 
 * Dockerise and deploy!
@@ -51,8 +54,8 @@ These Makefile targets have been deliberately split up so that you can run speci
 
 In the root of this repo:
 
-1. `make server/.env`
-2. Fill out `ELASTIC_PASSWORD` and `KIBANA_PASSWORD`
+1. `make .envs`. This will create `.env` files in `client/` and `server/`
+2. In `server/.env` Fill out `ELASTIC_PASSWORD` and `KIBANA_PASSWORD`.
 
 ### 2. Download and build G-NAF files
 

@@ -3,6 +3,12 @@ SHELL := /bin/bash
 server/.env:
 	@cp server/.env.template server/.env
 
+client/.env:
+	@cp client/.env.template client/.env
+
+.PHONY: .envs
+.envs:	server/.env client/.env
+
 .PHONY: setup-gnaf
 setup-gnaf:
 	@chmod +x server/scripts/download-gnaf.sh &&\
@@ -24,15 +30,15 @@ setup-elastic:
 
 .PHONY: install
 install:
-	@npm install --prefix client &&\
-	npm install --prefix server
+	@npm install --prefix client && npm install --prefix server
 
 .PHONY: up
 up:
-	@npm start --prefix client &\
+	@cd server && docker-compose up -d &&\
+	cd .. &&\
 	npm run watch --prefix server &\
-	cd server && docker-compose up -d
-
+	npm start --prefix client
+	
 .PHONY: down
 down:
 	@cd server && docker-compose down
@@ -44,6 +50,11 @@ watch-server:
 .PHONY: client
 client:
 	@npm start --prefix client
+
+.PHONY: deploy
+deploy:
+
+	
 
 .PHONY: pytest
 pytest:
