@@ -1,16 +1,25 @@
 import { useState } from "react";
+import { httpPostSearch } from "../api/addressSearch";
 
 const Search = ({ setSelectedAddress, searchText, setSearchText }) => {
-  const [suggestions, setSuggestions] = useState([
-    { id: "123", suggestion: "car" },
-    { id: "456", suggestion: "dog" },
-  ]);
+  const [suggestions, setSuggestions] = useState([]);
   const [suggestionsVisible, setSuggestionsVisible] = useState(false);
 
   const onChangeHandler = (event) => {
     const text = event.target.value;
     setSearchText(text);
     setSuggestionsVisible(true);
+
+    const getSuggestions = async () => {
+      if (text.length > 0) {
+        const { suggestions } = await httpPostSearch(text);
+        setSuggestions(suggestions);
+      } else {
+        setSuggestions("");
+      }
+    };
+
+    getSuggestions();
   };
 
   const onClickHandler = (event) => {
