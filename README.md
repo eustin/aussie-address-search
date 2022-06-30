@@ -82,6 +82,10 @@ Run `make deploy`
 
 This will start the Node server on `http://localhost:8000`.
 
+## Bringing down the stack
+
+Run `make down`
+
 ## Making requests to the Elasticsearch using Postman
 
 The base URL to make POST requests to when developing locally is this:
