@@ -53,7 +53,9 @@ client:
 
 .PHONY: deploy
 deploy:
-	@npm run build --prefix client
+	@npm run build --prefix client &&\
+	cd server && docker-compose up -d &&\
+	cd .. && npm run server --prefix server
 
 .PHONY: pytest
 pytest:
